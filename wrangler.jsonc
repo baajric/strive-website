@@ -1,0 +1,21 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "strive-website",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    // must match "name" above
+    { "binding": "WORKER_SELF_REFERENCE", "service": "strive-website" }
+  ],
+  // Uncomment once the Impressum is filled in; `npm run deploy` then creates the DNS records.
+  // "routes": [
+  //   { "pattern": "strivedigitally.com", "custom_domain": true },
+  //   { "pattern": "www.strivedigitally.com", "custom_domain": true }
+  // ],
+  "observability": { "enabled": true }
+}

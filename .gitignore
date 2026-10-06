@@ -43,3 +43,8 @@ next-env.d.ts
 # raw design/motion source files (475 MB) — not used by the site
 /assets/
 
+
+# cloudflare
+/.open-next/
+/.wrangler/
+.dev.vars
