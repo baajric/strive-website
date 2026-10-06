@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+/*
+  Strive design tokens.
+  Structure follows a bold, flat, pill-shaped system: one dominant dark (Ink),
+  one bright accent used sparingly as punctuation (Spark), cool-white canvas.
+*/
+:root {
+  --ink: #0b1020; /* logo navy – text, dark sections, filled nav */
+  --indigo: #1b2a5e; /* secondary dark for cards on Ink */
+  --spark: #ffcb47; /* accent – primary CTA fill, highlights on dark */
+  --ice: #e4eeff; /* pale blue wash – tinted cards, hover states */
+  --stage: #f4f8fc; /* hero canvas, sampled from the colour-corrected render */
+  --fog: #edf1f7; /* card surfaces on white */
+  --paper: #ffffff;
+  --charcoal: #3d4354; /* body copy */
+  --slate: #626a7d; /* supporting copy */
+  --pebble: #8b91a1; /* muted copy, hairlines */
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-indigo: var(--indigo);
+  --color-spark: var(--spark);
+  --color-ice: var(--ice);
+  --color-stage: var(--stage);
+  --color-fog: var(--fog);
+  --color-paper: var(--paper);
+  --color-charcoal: var(--charcoal);
+  --color-slate: var(--slate);
+  --color-pebble: var(--pebble);
+  --font-sans: var(--font-inter);
+  --radius-card: 10px;
+  --radius-panel: 28px;
+}
+
+html {
+  font-feature-settings: "calt";
+}
+
+body {
+  background: var(--paper);
+  color: var(--charcoal);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  letter-spacing: -0.006em;
+}
+
+/* Block-letter display voice: heavy, tight, uppercase. */
+@layer components {
+  .display {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.035em;
+    line-height: 0.86;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+}
+
+.brand-mask {
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotate(-2deg);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes scroll-line {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+.animate-scroll-line {
+  animation: scroll-line 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* Outlined display numerals (process steps); colour utilities can still fill them. */
+@layer components {
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+  }
+}
+
+/*
+  Scroll reveal. Elements carry data-reveal; RevealObserver arms only the ones
+  below the fold, so everything stays visible if JavaScript never runs.
+*/
+.reveal-armed {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+}
+
+.reveal-armed.reveal-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-orbit {
+  animation: spin-slow 48s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: spin-slow 48s linear infinite reverse;
+}
+
+/* Contact form "thank you": badge pops, tick draws, rings ripple, sparkles burst. */
+@keyframes success-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes success-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes success-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes success-spark {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(-28px) scale(0.3);
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(-1 * var(--d))) scale(1) rotate(90deg);
+  }
+}
+
+.success-pop {
+  animation: success-pop 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.success-check {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 22;
+  animation: success-draw 0.45s cubic-bezier(0.65, 0, 0.35, 1) 0.45s forwards;
+}
+
+.success-ring {
+  opacity: 0;
+  animation: success-ring 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.success-spark {
+  opacity: 0;
+  animation: success-spark 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s both;
+}
+
+.success-fade {
+  animation: fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success-pop,
+  .success-ring,
+  .success-spark,
+  .success-fade {
+    animation: none;
+  }
+  .success-check {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .success-ring,
+  .success-spark {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-scroll-line,
+  .animate-marquee,
+  .animate-fade-up,
+  .animate-orbit,
+  .animate-orbit-reverse {
+    animation: none;
+  }
+}
