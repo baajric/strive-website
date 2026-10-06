@@ -3,7 +3,7 @@
 //   website  – screenshots from `node scripts/capture-site.mjs <url> <slug>`
 //   software – a screenshot and/or a short muted MP4 loop of the app
 //   gallery  – images and short muted videos (posts, ads, branding, 3D …)
-//   video    – one larger muted loop (animations, ads, showreels)
+//   video    – one larger muted loop (animations, ads, showreels); `sound` adds a sound switch
 // Files live in /public/projects/<slug>/. Order here = order on the page.
 
 type ServiceId = "software" | "websites" | "design" | "video-motion" | "marketing" | "ki-automation";
@@ -15,7 +15,7 @@ export type ProjectMedia =
   | { kind: "website"; url?: string; desktop: string; mobile?: string }
   | { kind: "software"; image: string; video?: string; label?: string }
   | { kind: "gallery"; images: ProjectImage[] }
-  | { kind: "video"; src: string; poster: string; aspect?: "16/9" | "9/16" | "1/1" };
+  | { kind: "video"; src: string; poster: string; aspect?: "16/9" | "9/16" | "1/1"; sound?: boolean };
 
 export type Project = {
   id: string;
@@ -35,6 +35,8 @@ const tractive = at("tractive");
 const social = at("strive-social");
 const brand = at("strive-brand");
 const animation = at("strive-animation");
+const film = at("strive-brand-film");
+const gastroliza = at("gastroliza");
 
 export const projects: Project[] = [
   {
@@ -131,7 +133,7 @@ export const projects: Project[] = [
     id: "strive-social",
     title: "Strive – Social-Media-Content",
     summary:
-      "Unser eigener Instagram-Auftritt: Story-Karussells mit starken Hooks, editoriale Typografie und animierte Shorts, die Wissen vermitteln und Anfragen bringen.",
+      "Mein eigener Instagram-Auftritt: Story-Karussells mit starken Hooks, editoriale Typografie und animierte Shorts, die Wissen vermitteln und Anfragen bringen.",
     tags: ["Instagram", "Content-Strategie", "Motion"],
     services: ["design", "marketing"],
     media: {
@@ -148,10 +150,30 @@ export const projects: Project[] = [
     },
   },
   {
+    id: "strive-brand-film",
+    title: "Strive – Brand-Film",
+    summary:
+      "28 Sekunden Motion Design für LinkedIn: kinetische Typografie, 3D-Mockups mit echten Projekten und Sounddesign im Takt der Musik – komplett im Code animiert und Frame für Frame gerendert.",
+    tags: ["Motion Graphics", "Brand-Film", "Sounddesign"],
+    services: ["video-motion", "marketing"],
+    year: "2026",
+    media: { kind: "video", src: film("video.mp4"), poster: film("poster.webp"), aspect: "16/9", sound: true },
+  },
+  {
+    id: "gastroliza",
+    title: "Gastroliza – Produktvideo",
+    summary:
+      "Produktvideo für Gastroliza, eine Analytik-Plattform für Restaurants: Live-Umsätze aus der Kasse, Kellner-Ranking, Warenverbrauch aus Rezepturen und ein KI-Assistent – in 20 Sekunden erklärt.",
+    tags: ["Motion Graphics", "Produktvideo", "SaaS"],
+    services: ["video-motion"],
+    year: "2026",
+    media: { kind: "video", src: gastroliza("video.mp4"), poster: gastroliza("poster.webp"), aspect: "16/9", sound: true },
+  },
+  {
     id: "strive-animation",
     title: "Strive – 3D-Charakteranimation",
     summary:
-      "Eine eigene Pixar-inspirierte Figur und eine Drehbühnen-Animation vom Chaos zur Lösung – als scrollgesteuerte Sequenz die Hauptrolle auf unserer Startseite.",
+      "Eine eigene Pixar-inspirierte Figur und eine Drehbühnen-Animation vom Chaos zur Lösung – als scrollgesteuerte Sequenz die Hauptrolle auf meiner Startseite.",
     tags: ["3D-Animation", "Charakterdesign", "Scroll-Animation"],
     services: ["video-motion", "design"],
     year: "2026",
@@ -161,7 +183,7 @@ export const projects: Project[] = [
     id: "short-form",
     title: "Short-Form & Animation",
     summary:
-      "Animierte Shorts für Instagram und TikTok mit Hook in der ersten Sekunde – für unseren eigenen Kanal und als freies Konzept für Tractive.",
+      "Animierte Shorts für Instagram und TikTok mit Hook in der ersten Sekunde – für meinen eigenen Kanal und als freies Konzept für Tractive.",
     tags: ["Shorts", "Motion Design", "9:16"],
     services: ["video-motion"],
     media: {
@@ -194,9 +216,9 @@ export const projects: Project[] = [
   },
   {
     id: "strive-website",
-    title: "Strive – Agentur-Website",
+    title: "Strive – Portfolio-Website",
     summary:
-      "Unsere eigene Website: scrollgesteuerte 3D-Animation, eigenes Designsystem und blitzschnelles Next.js – gestaltet und entwickelt von uns.",
+      "Meine eigene Website: scrollgesteuerte 3D-Animation, eigenes Designsystem und blitzschnelles Next.js – selbst gestaltet und entwickelt.",
     tags: ["Next.js", "3D-Animation", "Designsystem"],
     services: ["software"],
     year: "2026",

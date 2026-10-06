@@ -6,7 +6,7 @@ export function Marquee() {
   const words = de.services.marquee;
 
   return (
-    <div aria-hidden className="relative z-10 -my-10 overflow-hidden py-10">
+    <div aria-hidden className="relative z-10 -my-10 overflow-x-clip py-10">
       <div className="-ml-[5%] w-[110%] -rotate-2 bg-ink py-4 shadow-[0_20px_50px_rgba(11,16,32,0.25)] md:py-6">
         <div className="animate-marquee flex w-max">
           {[0, 1].map((copy) => (

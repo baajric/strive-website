@@ -39,7 +39,7 @@ Lenis smooth scrolling is synchronized with GSAP and offsets anchor links for th
 | `/` | Hero animation, services, why Strive, process, contact |
 | `/leistungen` | All six services |
 | `/leistungen/[slug]` | Detail page per service, with related portfolio projects |
-| `/ueber-uns` | About the agency |
+| `/ueber-mich` | About me |
 | `/impressum`, `/datenschutz` | Legal notice and privacy policy |
 
 ## Project structure

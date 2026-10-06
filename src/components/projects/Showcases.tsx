@@ -1,5 +1,6 @@
 import type { ProjectMedia } from "@/content/projects";
 import { de } from "@/content/de";
+import { VideoPlayer } from "./VideoPlayer";
 
 type WebsiteMedia = Extract<ProjectMedia, { kind: "website" }>;
 type SoftwareMedia = Extract<ProjectMedia, { kind: "software" }>;
@@ -17,15 +18,11 @@ export function VideoShowcase({ media, title }: { media: VideoMedia; title: stri
         className="absolute -right-24 -top-24 h-96 w-96 rounded-full"
         style={{ background: "radial-gradient(closest-side, rgba(255,203,71,0.35), rgba(255,203,71,0))" }}
       />
-      <video
+      <VideoPlayer
         src={media.src}
         poster={media.poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        aria-label={title}
+        title={title}
+        sound={media.sound}
         className={`relative mx-auto block w-full rounded-2xl bg-paper object-cover shadow-[0_30px_60px_rgba(11,16,32,0.18)] ${aspect} ${
           media.aspect === "9/16" ? "max-w-sm" : ""
         }`}

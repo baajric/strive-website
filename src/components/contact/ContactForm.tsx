@@ -145,18 +145,7 @@ export function ContactForm() {
         </div>
       </Step>
 
-      <Step n="02" title={t.budget}>
-        <div className="flex flex-wrap gap-2">
-          {t.budgets.map((b) => (
-            <label key={b} className="cursor-pointer">
-              <input type="radio" name="budget" value={b} defaultChecked={v?.budget === b} className="peer sr-only" />
-              <span className={chip}>{b}</span>
-            </label>
-          ))}
-        </div>
-      </Step>
-
-      <Step n="03" title={t.about}>
+      <Step n="02" title={t.about}>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="c-name" className={label}>
@@ -202,7 +191,7 @@ export function ContactForm() {
         </div>
       </Step>
 
-      <Step n="04" title={t.messageGroup}>
+      <Step n="03" title={t.messageGroup}>
         <label htmlFor="c-message" className="sr-only">
           {t.message}
         </label>

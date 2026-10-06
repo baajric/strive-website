@@ -3,7 +3,7 @@ import { de, serviceHref } from "@/content/de";
 import { SITE_URL } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const pages = ["/", "/leistungen", ...de.services.items.map((s) => serviceHref(s.id)), "/ueber-uns", "/impressum", "/datenschutz"];
+  const pages = ["/", "/leistungen", ...de.services.items.map((s) => serviceHref(s.id)), "/ueber-mich", "/impressum", "/datenschutz"];
   return pages.map((path) => ({
     url: new URL(path, SITE_URL).href,
     changeFrequency: "monthly",
