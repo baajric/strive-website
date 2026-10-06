@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-// Draft for a personal portfolio on Cloudflare; extend section 3 once enquiries are sent by e-mail (Resend).
+// Draft for a personal portfolio on Cloudflare with enquiries delivered through Resend.
 export default function PrivacyPage() {
   return (
     <LegalPage title={de.legal.privacy.title} draft={legalDraft}>
@@ -37,6 +37,10 @@ export default function PrivacyPage() {
           Themen und Ihre Nachricht ausschließlich zur Bearbeitung Ihrer Anfrage verwendet (Art. 6 Abs. 1 lit. b DSGVO).
           Die Daten werden gelöscht, sobald sie dafür nicht mehr benötigt werden und keine gesetzlichen
           Aufbewahrungspflichten bestehen.
+        </p>
+        <p className="mt-2">
+          Ihre Anfrage wird per E-Mail über den Dienst Resend (Resend, Inc., USA) zugestellt. Der Versand erfolgt über
+          Server in der EU (Irland).
         </p>
       </div>
       <div>

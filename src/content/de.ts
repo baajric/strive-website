@@ -381,6 +381,7 @@ export const de = {
         message: "Bitte schreiben Sie mir ein paar Worte zu Ihrem Vorhaben.",
         consent: "Bitte stimmen Sie der Datenschutzerklärung zu.",
         generic: "Bitte prüfen Sie die markierten Felder.",
+        send: "Die Nachricht konnte gerade nicht gesendet werden. Bitte versuchen Sie es in ein paar Minuten erneut.",
       },
     },
   },

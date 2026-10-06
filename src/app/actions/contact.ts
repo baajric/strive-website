@@ -2,7 +2,7 @@
 
 import { de } from "@/content/de";
 
-type Field = "name" | "email" | "message" | "consent";
+type Field = "name" | "email" | "message" | "consent" | "send";
 
 export type ContactValues = {
   name: string;
@@ -22,6 +22,36 @@ export type ContactState = {
 };
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const FROM = "Strive Website <kontakt@strivedigitally.com>";
+
+/**
+ * Sends the enquiry to CONTACT_TO through Resend, with Reply-To set to the visitor.
+ * Both values are Worker secrets (`wrangler secret put`); without them the enquiry is only logged.
+ */
+async function deliver(values: ContactValues): Promise<boolean> {
+  const key = process.env.RESEND_API_KEY;
+  const to = process.env.CONTACT_TO;
+  if (!key || !to) {
+    console.info("[contact] e-mail not configured, enquiry:", values);
+    return true;
+  }
+
+  const details = [
+    `Name: ${values.name}`,
+    `E-Mail: ${values.email}`,
+    values.company && `Unternehmen: ${values.company}`,
+    values.interests.length > 0 && `Interessen: ${values.interests.join(", ")}`,
+  ].filter(Boolean);
+  const text = `${details.join("\n")}\n\n${values.message}`;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ from: FROM, to: [to], reply_to: values.email, subject: `Neue Anfrage von ${values.name}`, text }),
+  });
+  if (!res.ok) console.error("[contact] Resend error", res.status, await res.text());
+  return res.ok;
+}
 
 export async function sendContact(prev: ContactState, formData: FormData): Promise<ContactState> {
   const attempt = prev.attempt + 1;
@@ -47,8 +77,7 @@ export async function sendContact(prev: ContactState, formData: FormData): Promi
   if (!values.consent) errors.consent = errorText.consent;
   if (Object.keys(errors).length) return { status: "error", attempt, errors, values };
 
-  // TODO: deliver the enquiry by e-mail (e.g. via Resend) once the Strive inbox is set up.
-  console.info("[contact] new enquiry", values);
+  if (!(await deliver(values))) return { status: "error", attempt, errors: { send: errorText.send }, values };
 
   return { status: "success", attempt };
 }

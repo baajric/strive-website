@@ -238,6 +238,7 @@ export function ContactForm() {
             </svg>
           )}
         </button>
+        <FieldError message={errors.send} />
       </div>
     </form>
   );
