@@ -46,10 +46,15 @@ async function deliver(values: ContactValues): Promise<boolean> {
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: FROM, to: [to], reply_to: values.email, subject: `Neue Anfrage von ${values.name}`, text }),
+    // Resend rejects requests without a User-Agent, and Workers' fetch sends none by default.
+    headers: { Authorization: `Bearer ${key.trim()}`, "Content-Type": "application/json", "User-Agent": "strive-website/1.0" },
+    body: JSON.stringify({ from: FROM, to: [to.trim()], reply_to: values.email, subject: `Neue Anfrage von ${values.name}`, text }),
   });
-  if (!res.ok) console.error("[contact] Resend error", res.status, await res.text());
+  if (!res.ok) {
+    // Shape of the secrets only (never their values), to spot a mangled paste.
+    const shape = { keyLength: key.trim().length, keyPrefixOk: key.trim().startsWith("re_"), toLooksLikeEmail: EMAIL.test(to.trim()) };
+    console.error("[contact] Resend error", res.status, await res.text(), shape);
+  }
   return res.ok;
 }
 
