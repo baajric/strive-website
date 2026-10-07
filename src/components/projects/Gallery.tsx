@@ -5,6 +5,24 @@ import type { ProjectImage } from "@/content/projects";
 import { de } from "@/content/de";
 import { getLenis } from "@/lib/lenis";
 
+/** 2 columns on phones, 3 from md, 4 from lg – the breakpoints of the old CSS columns. */
+function useColumnCount() {
+  const [count, setCount] = useState(2);
+  useEffect(() => {
+    const md = window.matchMedia("(min-width: 768px)");
+    const lg = window.matchMedia("(min-width: 1024px)");
+    const update = () => setCount(lg.matches ? 4 : md.matches ? 3 : 2);
+    update();
+    md.addEventListener("change", update);
+    lg.addEventListener("change", update);
+    return () => {
+      md.removeEventListener("change", update);
+      lg.removeEventListener("change", update);
+    };
+  }, []);
+  return count;
+}
+
 /**
  * Masonry columns, so posts and ads keep their full format (no cropped text).
  * Clicking a tile opens it full screen; arrow keys and Escape work there.
@@ -38,44 +56,61 @@ export function Gallery({ images }: { images: ProjectImage[] }) {
   }, [open, close, step]);
 
   const current = open === null ? null : images[open];
+  const columnCount = useColumnCount();
+  // Items dealt round-robin into flex columns: masonry without CSS columns,
+  // which make iOS Safari paint videos in the wrong place.
+  const columns = Array.from({ length: columnCount }, (_, c) =>
+    images.map((img, i) => ({ img, i })).filter(({ i }) => i % columnCount === c),
+  );
 
   return (
     <>
-      <div className="columns-2 gap-3 md:columns-3 md:gap-4 lg:columns-4">
-        {images.map((img, i) => (
-          <button
-            key={img.src}
-            type="button"
-            onClick={() => setOpen(i)}
-            aria-label={`${t.open}: ${img.alt}`}
-            className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-[18px] bg-fog md:mb-4"
-          >
-            {img.video ? (
-              <video
-                src={img.video}
-                poster={img.src}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="block h-auto w-full"
-              />
-            ) : (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                src={img.src}
-                alt={img.alt}
-                loading="lazy"
-                className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-            )}
-            <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-paper/90 text-ink opacity-0 shadow-md transition-opacity group-hover:opacity-100">
-              <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden>
-                <path d="M12 3h5v5M8 17H3v-5M17 3l-6 6M3 17l6-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          </button>
+      <div className="flex items-start gap-3 md:gap-4">
+        {columns.map((column, c) => (
+          <div key={c} className="flex min-w-0 flex-1 flex-col gap-3 md:gap-4">
+            {column.map(({ img, i }) => (
+              <button
+                key={img.src}
+                type="button"
+                onClick={() => setOpen(i)}
+                aria-label={`${t.open}: ${img.alt}`}
+                className="group relative block w-full overflow-hidden rounded-[18px] bg-fog ring-1 ring-ink/[0.06]"
+              >
+                {img.video ? (
+                  <video
+                    src={img.video}
+                    poster={img.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="block h-auto w-full"
+                  />
+                ) : (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    loading="lazy"
+                    className="block h-auto w-full transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                )}
+                <span className="absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-paper/90 text-ink opacity-0 shadow-md transition-opacity group-hover:opacity-100">
+                  <svg viewBox="0 0 20 20" className="h-4 w-4" aria-hidden>
+                    <path
+                      d="M12 3h5v5M8 17H3v-5M17 3l-6 6M3 17l6-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </button>
+            ))}
+          </div>
         ))}
       </div>
 

@@ -16,6 +16,8 @@ import {
 } from "./stage";
 
 gsap.registerPlugin(ScrollTrigger);
+// Phone toolbars that slide in and out must not re-run the scroll layout.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 const STAGE_RGB = "244, 248, 252";
 const SKY_RGB = "228, 238, 255";
@@ -47,8 +49,11 @@ export function HeroSequence() {
     const outroDesktop = outroDesktopRef.current!;
     const icons = iconRefs.current.filter(Boolean) as HTMLAnchorElement[];
 
+    // The sticky box is 100svh, which stays put while mobile browser bars come and go;
+    // window.innerHeight does not, and drawing at that height squashed the render.
+    const box = canvas.parentElement!;
     const state = { frame: 0, zoom: 0 };
-    let stage: Stage = computeStage(window.innerWidth, window.innerHeight, 0);
+    let stage: Stage = computeStage(box.clientWidth, box.clientHeight, 0);
     const set = window.innerWidth < 768 ? "mobile" : "desktop";
 
     // --- Frame loading: first frame, then a coarse pass, then fill the gaps,
@@ -90,9 +95,12 @@ export function HeroSequence() {
     };
 
     // --- Layout + drawing
+    let size = "";
     const resize = () => {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+      const vw = box.clientWidth;
+      const vh = box.clientHeight;
+      if (`${vw}x${vh}` === size) return;
+      size = `${vw}x${vh}`;
       // offsetTop ignores the scroll-driven transform, which is what we want.
       stage = computeStage(vw, vh, introHead.offsetTop + introHead.offsetHeight);
 
@@ -151,7 +159,8 @@ export function HeroSequence() {
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    const observer = new ResizeObserver(resize);
+    observer.observe(box);
 
     // --- Scroll choreography (timeline length = 1 → positions read as % of scroll)
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -235,7 +244,7 @@ export function HeroSequence() {
 
     return () => {
       cancelled = true;
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
       mm.revert();
     };
   }, [serviceKey]);
@@ -245,7 +254,7 @@ export function HeroSequence() {
   const ctaLink =
     "text-base font-semibold text-ink underline decoration-2 underline-offset-4 hover:decoration-spark";
   const headPos = "absolute inset-x-0 top-[92px] z-30 flex flex-col items-center px-4 text-center";
-  const headType = "display max-w-[11ch] text-[clamp(3.1rem,15vw,4.5rem)]";
+  const headType = "display max-w-[11ch] text-[clamp(2.6rem,13vw,4.5rem)]";
   const footPos = "absolute inset-x-0 z-30 flex flex-col items-center px-5 text-center md:hidden";
 
   return (

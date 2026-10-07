@@ -38,6 +38,12 @@ html {
   font-feature-settings: "calt";
 }
 
+/* Nothing may push the page sideways on phones (clip keeps position: sticky working). */
+html,
+body {
+  overflow-x: clip;
+}
+
 body {
   background: var(--paper);
   color: var(--charcoal);
@@ -54,6 +60,19 @@ body {
     line-height: 0.86;
     color: var(--ink);
     text-wrap: balance;
+  }
+
+  /* Long German words ("Ansprechpartner") break with a hyphen instead of running off narrow screens.
+     Known long words also carry soft hyphens in the copy; this is the safety net for the rest. */
+  @media (max-width: 767px) {
+    .display,
+    h1,
+    h2,
+    h3,
+    h4 {
+      hyphens: auto;
+      overflow-wrap: anywhere;
+    }
   }
 }
 

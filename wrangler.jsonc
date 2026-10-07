@@ -12,10 +12,10 @@
     // must match "name" above
     { "binding": "WORKER_SELF_REFERENCE", "service": "strive-website" }
   ],
-  // Uncomment once the Impressum is filled in; `npm run deploy` then creates the DNS records.
-  // "routes": [
-  //   { "pattern": "strivedigitally.com", "custom_domain": true },
-  //   { "pattern": "www.strivedigitally.com", "custom_domain": true }
-  // ],
+  // Custom domains; `npm run deploy` creates the DNS records and certificates. www redirects in next.config.ts.
+  "routes": [
+    { "pattern": "strivedigitally.com", "custom_domain": true },
+    { "pattern": "www.strivedigitally.com", "custom_domain": true }
+  ],
   "observability": { "enabled": true }
 }

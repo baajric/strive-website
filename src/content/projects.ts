@@ -224,7 +224,7 @@ export const projects: Project[] = [
     year: "2026",
     media: {
       kind: "website",
-      // url: add the live address once the domain is set
+      url: "https://strivedigitally.com/",
       desktop: "/projects/strive-website/desktop.jpg",
       mobile: "/projects/strive-website/mobile.jpg",
     },

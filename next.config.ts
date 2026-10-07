@@ -5,6 +5,17 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.0.209", "192.168.*.*"],
   // Keep the dev badge out of previews and portfolio screenshots.
   devIndicators: false,
+  // One canonical address: www.strivedigitally.com → strivedigitally.com.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.strivedigitally.com" }],
+        destination: "https://strivedigitally.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

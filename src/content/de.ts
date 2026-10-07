@@ -31,7 +31,7 @@ export const de = {
   },
   services: {
     eyebrow: "Leistungen",
-    title: "Sechs Disziplinen. Ein Ansprechpartner.",
+    title: "Sechs Disziplinen. Ein Ansprech\u00ADpartner.",
     intro:
       "Statt fünf Dienstleister zu koordinieren, bekommen Sie bei mir alles aus einer Hand – abgestimmt, schnell und aus einem Guss.",
     more: "Mehr erfahren",
@@ -87,7 +87,7 @@ export const de = {
         intro:
           "Von der Unternehmensseite bis zum Online-Shop: Ich gestalte und entwickle schnelle, moderne Websites, die Vertrauen schaffen und Anfragen bringen.",
         offerings: [
-          { title: "Unternehmenswebsites", text: "Ein Auftritt, der zeigt, wer Sie sind und warum man Sie wählen sollte." },
+          { title: "Unternehmens\u00ADwebsites", text: "Ein Auftritt, der zeigt, wer Sie sind und warum man Sie wählen sollte." },
           { title: "Landingpages", text: "Fokussierte Seiten für Kampagnen, Produkte und Aktionen." },
           { title: "Online-Shops", text: "Shops, die einfach zu bedienen sind – für Ihre Kunden und für Sie." },
           { title: "Relaunch & Redesign", text: "Ich mache Ihre bestehende Website modern, schnell und übersichtlich." },
@@ -97,7 +97,7 @@ export const de = {
         benefits: [
           { title: "Schnell", text: "Kurze Ladezeiten für bessere Rankings und weniger Absprünge." },
           { title: "Mobil zuerst", text: "Perfekt auf jedem Smartphone, Tablet und Desktop." },
-          { title: "Suchmaschinenfreundlich", text: "Technisch so gebaut, dass Google Sie gut findet." },
+          { title: "Suchmaschinen\u00ADfreundlich", text: "Technisch so gebaut, dass Google Sie gut findet." },
         ],
         faq: [
           {
@@ -195,7 +195,7 @@ export const de = {
         intro:
           "Ich sorge dafür, dass die richtigen Menschen Sie finden – mit SEO, Kampagnen und Social Media, deren Erfolg ich messbar mache.",
         offerings: [
-          { title: "Suchmaschinenoptimierung", text: "Bessere Rankings bei Google für die Begriffe, nach denen Ihre Kunden suchen." },
+          { title: "Suchmaschinen\u00ADoptimierung", text: "Bessere Rankings bei Google für die Begriffe, nach denen Ihre Kunden suchen." },
           { title: "Google & Meta Ads", text: "Bezahlte Kampagnen, die gezielt die richtigen Menschen erreichen." },
           { title: "Social Media", text: "Strategie, Inhalte und Betreuung Ihrer Kanäle." },
           { title: "Content & Texte", text: "Texte, Blogartikel und Newsletter, die gelesen werden." },
@@ -231,7 +231,7 @@ export const de = {
         intro:
           "Ich automatisiere wiederkehrende Aufgaben und baue KI-Lösungen, die Ihrem Team jeden Tag Zeit sparen – sicher und in Ihre bestehenden Tools integriert.",
         offerings: [
-          { title: "Prozessautomatisierung", text: "Wiederkehrende Abläufe laufen automatisch – ohne Copy-and-paste." },
+          { title: "Prozess\u00ADautomatisierung", text: "Wiederkehrende Abläufe laufen automatisch – ohne Copy-and-paste." },
           { title: "KI-Chatbots & Assistenten", text: "Beantworten Kundenfragen rund um die Uhr oder helfen Ihrem Team intern." },
           { title: "Dokumente & E-Mails", text: "Rechnungen, Anfragen und Formulare werden automatisch erkannt und verarbeitet." },
           { title: "Tool-Integrationen", text: "CRM, Buchhaltung, Kalender und mehr – sauber miteinander verbunden." },
@@ -327,7 +327,7 @@ export const de = {
     },
     with: {
       label: "Mit Strive",
-      headline: "Ein Ansprechpartner. Ein Plan.",
+      headline: "Ein Ansprech\u00ADpartner. Ein Plan.",
       points: [
         "Ein Ansprechpartner für alles",
         "Strategie, Design und Code aus einem Guss",

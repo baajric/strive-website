@@ -49,7 +49,8 @@ export function computeStage(vw: number, vh: number, headBottom: number): Stage 
   if (portrait) {
     // Copy below the render needs this much room; the render fills the gap
     // above it and its empty sky may slide under the headline.
-    const bottom = vh - clamp(vh * 0.22, 150, 200);
+    // Room for the closing headline + buttons as well, so they never run under the marquee.
+    const bottom = vh - clamp(vh * 0.27, 180, 230);
     const w0 = clamp(((bottom - headBottom) / 0.86) * ASPECT, vw * 1.5, vw * 2);
     // He keeps his size and place for the whole sequence on phones.
     const start = centred(vw, w0, bottom - w0 / ASPECT);
