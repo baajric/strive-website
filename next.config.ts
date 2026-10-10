@@ -7,13 +7,12 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   // One canonical address: www.strivedigitally.com → strivedigitally.com.
   async redirects() {
+    const www = [{ type: "host" as const, value: "www.strivedigitally.com" }];
     return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.strivedigitally.com" }],
-        destination: "https://strivedigitally.com/:path*",
-        permanent: true,
-      },
+      // The home page needs its own rule: OpenNext only fills in `:path*` when the path
+      // matched something, so "/" would redirect to the literal "/:path*".
+      { source: "/", has: www, destination: "https://strivedigitally.com/", permanent: true },
+      { source: "/:path*", has: www, destination: "https://strivedigitally.com/:path*", permanent: true },
     ];
   },
 };
